@@ -1,5 +1,8 @@
 package com.sergeymar4.servletapp2.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +20,7 @@ public class Teacher {
     @Column(name = "age")
     private int age;
     @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    @JsonManagedReference
     List<Course> courses;
 
     public int getId() {

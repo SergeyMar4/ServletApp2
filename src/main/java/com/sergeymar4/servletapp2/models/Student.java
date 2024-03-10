@@ -1,5 +1,8 @@
 package com.sergeymar4.servletapp2.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,6 +21,7 @@ public class Student {
     private int age;
     @ManyToOne
     @JoinColumn(name = "class_id")
+    @JsonBackReference
     private SchoolClass schoolClass;
 
     public int getId() {

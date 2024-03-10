@@ -1,5 +1,8 @@
 package com.sergeymar4.servletapp2.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -16,6 +19,7 @@ public class SchoolClass {
     @Column(name = "title")
     private String title;
     @OneToMany(mappedBy = "schoolClass", fetch = FetchType.EAGER)
+    @JsonManagedReference
     List<Student> students;
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

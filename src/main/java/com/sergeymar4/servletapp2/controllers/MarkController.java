@@ -5,6 +5,10 @@ import com.sergeymar4.servletapp2.models.Mark;
 import com.sergeymar4.servletapp2.repositories.CourseRepository;
 import com.sergeymar4.servletapp2.repositories.MarkRepository;
 import com.sergeymar4.servletapp2.repositories.StudentRepository;
+import com.sergeymar4.servletapp2.utils.HibernateUtil;
+import org.hibernate.SessionFactory;
+
+import java.util.List;
 
 public class MarkController {
     private MarkRepository markRepository;
@@ -15,6 +19,10 @@ public class MarkController {
         this.markRepository = new MarkRepository();
         this.courseRepository = new CourseRepository();
         this.studentRepository = new StudentRepository();
+    }
+
+    public List<Mark> getAll() {
+        return markRepository.getAll();
     }
 
     public Mark getById(int id) {

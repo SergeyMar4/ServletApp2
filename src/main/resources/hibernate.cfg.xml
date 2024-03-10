@@ -9,7 +9,6 @@
         <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
         <property name="hibernate.connection.url">jdbc:sqlite:src/main/resources/db.sqlite</property>
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="hibernate.connection.pool_size">1</property>
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">false</property>
         <!-- SQL dialect -->

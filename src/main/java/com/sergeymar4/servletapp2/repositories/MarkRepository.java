@@ -4,9 +4,24 @@ package com.sergeymar4.servletapp2.repositories;
 import com.sergeymar4.servletapp2.models.Mark;
 import com.sergeymar4.servletapp2.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class MarkRepository {
+
+    public List<Mark> getAll() {
+        List<Mark> marks = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query query = session.createQuery("from Mark");
+            marks = query.list();
+        }
+
+        return marks;
+    }
 
     public Mark getById(int id) {
         Mark mark = null;
