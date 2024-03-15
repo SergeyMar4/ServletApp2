@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -40,6 +41,40 @@ public class TeacherServlet extends HttpServlet {
         else {
             List<Teacher> teachers = teacherController.getAll();
             pw.println(new ObjectMapper().writeValueAsString(teachers));
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter pw = response.getWriter();
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        try (BufferedReader br = request.getReader()) {
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        }
+
+        Teacher teacher = new ObjectMapper().readValue(sb.toString(), Teacher.class);
+        teacherController.create(teacher);
+        System.out.println(teacher);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter pw = response.getWriter();
+        String teacherId = request.getParameter("id");
+
+        if (teacherId == null) {
+            pw.println("<h1>Нет информации об id</h1>");
+        }
+        else {
+            teacherController.delete(Integer.parseInt(teacherId));
         }
     }
 }

@@ -28,11 +28,8 @@ public class TeacherController {
         teacherRepository.addCourse(teacherRepository.getById(teacher_id), courseRepository.getById(course_id));
     }
 
-    public void create(String firstName, String lastName, int age) {
-        Teacher teacher = new Teacher();
-        teacher.setFirstName(firstName);
-        teacher.setLastName(lastName);
-        teacher.setAge(age);
+    public void create(Teacher teacher) {
+        teacher.setCourses(teacher.getCourses());
         teacherRepository.create(teacher);
     }
 

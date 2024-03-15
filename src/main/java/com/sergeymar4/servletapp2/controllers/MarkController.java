@@ -29,12 +29,9 @@ public class MarkController {
         return markRepository.getById(id);
     }
 
-    public void create(int course_id, int student_id, int mark1, int quarter) {
-        Mark mark = new Mark();
-        mark.setMark(mark1);
-        mark.setCourse(courseRepository.getById(course_id));
-        mark.setStudent(studentRepository.getById(student_id));
-        mark.setQuarter(quarter);
+    public void create(Mark mark) {
+        mark.setCourse(courseRepository.getById(mark.getCourse().getId()));
+        mark.setStudent(studentRepository.getById(mark.getStudent().getId()));
         markRepository.create(mark);
     }
 

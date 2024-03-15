@@ -25,10 +25,8 @@ public class CourseController {
         return courseRepository.getAll();
     }
 
-    public void create(String title, int teacher_id) {
-        Course course = new Course();
-        course.setTitle(title);
-        course.setTeacher(teacherRepository.getById(teacher_id));
+    public void create(Course course) {
+        course.setTeacher(teacherRepository.getById(course.getTeacher().getId()));
         courseRepository.create(course);
     }
 

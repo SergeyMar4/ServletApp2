@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -38,6 +39,41 @@ public class CourseServlet extends HttpServlet {
         else {
             List<Course> courses = courseController.getAll();
             pw.println(new ObjectMapper().writeValueAsString(courses));
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter pw = response.getWriter();
+        String line;
+        StringBuilder sb = new StringBuilder();
+
+        try (BufferedReader br = request.getReader()) {
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        }
+
+        Course course = new ObjectMapper().readValue(sb.toString(), Course.class);
+        courseController.create(course);
+
+        pw.println("<h1>Объект успешно создан</h1>");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter pw = response.getWriter();
+        String courseId = request.getParameter("id");
+
+        if (courseId == null) {
+            pw.println("<h1>Нет информации об id</h1>");
+        }
+        else {
+            courseController.delete(Integer.parseInt(courseId));
         }
     }
 }

@@ -30,12 +30,8 @@ public class StudentController {
         return studentRepository.getAll();
     }
 
-    public void create(int class_id, String firstName, String lastName, int age) {
-        Student student = new Student();
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setAge(age);
-        student.setSchoolClass(schoolClassRepository.getById(class_id));
+    public void create(Student student) {
+        student.setSchoolClass(schoolClassRepository.getById(student.getSchoolClass().getId()));
         studentRepository.create(student);
     }
 

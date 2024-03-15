@@ -45,9 +45,9 @@ public class SchoolClassController {
         schoolClassRepository.addCourse(schoolClassRepository.getById(school_id), courseRepository.getById(course_id));
     }
 
-    public void create(String title) {
-        SchoolClass schoolClass = new SchoolClass();
-        schoolClass.setTitle(title);
+    public void create(SchoolClass schoolClass) {
+        schoolClass.setCourses(schoolClass.getCourses());
+        schoolClass.setStudents(schoolClass.getStudents());
         schoolClassRepository.create(schoolClass);
     }
 
