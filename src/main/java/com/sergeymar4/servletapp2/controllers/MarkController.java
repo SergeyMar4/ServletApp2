@@ -35,12 +35,23 @@ public class MarkController {
         markRepository.create(mark);
     }
 
-    public void update(int id, int course_id, int student_id, int mark1) {
-        Mark mark = markRepository.getById(id);
-        mark.setMark(mark1);
-        mark.setStudent(studentRepository.getById(student_id));
-        mark.setCourse(courseRepository.getById(course_id));
-        markRepository.update(mark);
+    public void update(Mark mark) {
+        Mark oldMark = markRepository.getById(mark.getId());
+
+        if (mark.getMark() != 0) {
+            oldMark.setMark(mark.getMark());
+        }
+        if (mark.getQuarter() != 0) {
+            oldMark.setQuarter(mark.getQuarter());
+        }
+        if (mark.getStudent() != null) {
+            oldMark.setStudent(studentRepository.getById(mark.getStudent().getId()));
+        }
+        if (mark.getCourse() != null) {
+            oldMark.setCourse(courseRepository.getById(mark.getCourse().getId()));
+        }
+
+        markRepository.update(oldMark);
     }
 
     public void delete(int id) {

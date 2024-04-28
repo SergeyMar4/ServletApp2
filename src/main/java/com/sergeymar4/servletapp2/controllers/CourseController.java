@@ -30,12 +30,19 @@ public class CourseController {
         courseRepository.create(course);
     }
 
-    public void update(int id, String title, int teacher_id) {
-        Course course = courseRepository.getById(id);
-        course.setTitle(title);
-        course.setTeacher(teacherRepository.getById(teacher_id));
-        courseRepository.update(course);
+    public void update(Course course) {
+        Course oldCourse = courseRepository.getById(course.getId());
+
+        if (course.getTitle() != null) {
+            oldCourse.setTitle(course.getTitle());
+        }
+        if (course.getTeacher() != null) {
+            oldCourse.setTeacher(teacherRepository.getById(course.getTeacher().getId()));
+        }
+
+        courseRepository.update(oldCourse);
     }
+
     public void delete(int id) {
         courseRepository.delete(courseRepository.getById(id));
     }

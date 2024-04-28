@@ -26,6 +26,9 @@ public class SchoolClassServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
@@ -75,5 +78,25 @@ public class SchoolClassServlet extends HttpServlet {
         else {
             schoolClassController.delete(Integer.parseInt(schoolClassId));
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter pw = response.getWriter();
+        String line;
+        StringBuilder sb = new StringBuilder();
+
+        try (BufferedReader br = request.getReader()) {
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        }
+
+        SchoolClass schoolClass = new ObjectMapper().readValue(sb.toString(), SchoolClass.class);
+        schoolClassController.update(schoolClass);
+
+        pw.println("<h1>Объект успешно обновлён</h1>");
     }
 }

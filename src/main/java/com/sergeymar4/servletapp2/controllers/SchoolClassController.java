@@ -2,12 +2,14 @@ package com.sergeymar4.servletapp2.controllers;
 
 
 
+import com.sergeymar4.servletapp2.models.Course;
 import com.sergeymar4.servletapp2.models.SchoolClass;
 import com.sergeymar4.servletapp2.models.Student;
 import com.sergeymar4.servletapp2.repositories.CourseRepository;
 import com.sergeymar4.servletapp2.repositories.SchoolClassRepository;
 import com.sergeymar4.servletapp2.repositories.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SchoolClassController {
@@ -51,10 +53,31 @@ public class SchoolClassController {
         schoolClassRepository.create(schoolClass);
     }
 
-    public void update(int id, String title) {
-        SchoolClass schoolClass = schoolClassRepository.getById(id);
-        schoolClass.setTitle(title);
-        schoolClassRepository.update(schoolClass);
+    public void update(SchoolClass schoolClass) {
+        SchoolClass oldSchoolClass = schoolClassRepository.getById(schoolClass.getId());
+
+        if (schoolClass.getTitle() != null) {
+            oldSchoolClass.setTitle(schoolClass.getTitle());
+        }
+        if (schoolClass.getStudents() != null) {
+
+            for (Student student : schoolClass.getStudents()) {
+                Student student1 = studentRepository.getById(student.getId());
+                student1.setSchoolClass(schoolClassRepository.getById(schoolClass.getId()));
+                studentRepository.update(student1);
+            }
+        }
+        if (schoolClass.getCourses() != null) {
+            List<Course> courses = new ArrayList<>();
+
+            for (Course course : schoolClass.getCourses()) {
+                courses.add(courseRepository.getById(course.getId()));
+            }
+
+            oldSchoolClass.setCourses(courses);
+        }
+
+        schoolClassRepository.update(oldSchoolClass);
     }
 
     public void delete(int id) {

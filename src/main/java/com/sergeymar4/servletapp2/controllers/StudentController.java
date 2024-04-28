@@ -35,13 +35,23 @@ public class StudentController {
         studentRepository.create(student);
     }
 
-    public void update(int id, int class_id, String firstName, String lastName, int age) {
-        Student student = studentRepository.getById(id);
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setAge(age);
-        student.setSchoolClass(schoolClassRepository.getById(class_id));
-        studentRepository.update(student);
+    public void update(Student student) {
+        Student oldStudent = studentRepository.getById(student.getId());
+
+        if (student.getFirstName() != null) {
+            oldStudent.setFirstName(student.getFirstName());
+        }
+        if (student.getLastName() != null) {
+            oldStudent.setLastName(student.getLastName());
+        }
+        if (student.getAge() != 0) {
+            oldStudent.setAge(student.getAge());
+        }
+        if (student.getSchoolClass() != null) {
+            oldStudent.setSchoolClass(schoolClassRepository.getById(student.getSchoolClass().getId()));
+        }
+
+        studentRepository.update(oldStudent);
     }
 
     public void delete(int id) {

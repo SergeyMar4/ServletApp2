@@ -2,10 +2,12 @@ package com.sergeymar4.servletapp2.controllers;
 
 
 
+import com.sergeymar4.servletapp2.models.Course;
 import com.sergeymar4.servletapp2.models.Teacher;
 import com.sergeymar4.servletapp2.repositories.CourseRepository;
 import com.sergeymar4.servletapp2.repositories.TeacherRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherController {
@@ -33,12 +35,28 @@ public class TeacherController {
         teacherRepository.create(teacher);
     }
 
-    public void update(int id, String firstName, String lastName, int age) {
-        Teacher teacher = teacherRepository.getById(id);
-        teacher.setFirstName(firstName);
-        teacher.setLastName(lastName);
-        teacher.setAge(age);
-        teacherRepository.update(teacher);
+    public void update(Teacher teacher) {
+        Teacher oldTeacher = teacherRepository.getById(teacher.getId());
+
+        if (teacher.getFirstName() != null) {
+            oldTeacher.setFirstName(teacher.getFirstName());
+        }
+        if (teacher.getLastName() != null) {
+            oldTeacher.setLastName(teacher.getLastName());
+        }
+        if (teacher.getAge() != 0) {
+            oldTeacher.setAge(teacher.getAge());
+        }
+        if (teacher.getCourses() != null) {
+
+            for (Course course : teacher.getCourses()) {
+                Course course1 = courseRepository.getById(course.getId());
+                course1.setTeacher(teacherRepository.getById(teacher.getId()));
+                courseRepository.update(course1);
+            }
+        }
+
+        teacherRepository.update(oldTeacher);
     }
 
     public void delete(int id) {
