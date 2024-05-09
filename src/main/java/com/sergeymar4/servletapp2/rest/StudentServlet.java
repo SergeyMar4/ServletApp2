@@ -47,6 +47,9 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
@@ -69,6 +72,9 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
@@ -84,6 +90,9 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
@@ -99,5 +108,13 @@ public class StudentServlet extends HttpServlet {
         Student student = new ObjectMapper().readValue(sb.toString(), Student.class);
         studentController.update(student);
         pw.println("<h1>Объект успешно обновлён</h1>");
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }

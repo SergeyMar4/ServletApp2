@@ -49,7 +49,6 @@ public class SchoolClassController {
 
     public void create(SchoolClass schoolClass) {
         schoolClass.setCourses(schoolClass.getCourses());
-        schoolClass.setStudents(schoolClass.getStudents());
         schoolClassRepository.create(schoolClass);
     }
 

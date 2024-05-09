@@ -47,7 +47,10 @@ public class CourseServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+//        response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
         String line;
@@ -62,12 +65,14 @@ public class CourseServlet extends HttpServlet {
         Course course = new ObjectMapper().readValue(sb.toString(), Course.class);
         courseController.create(course);
 
-        pw.println("<h1>Объект успешно создан</h1>");
+//        pw.println("<h1>Объект успешно создан</h1>");
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
         String courseId = request.getParameter("id");
@@ -82,6 +87,9 @@ public class CourseServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
@@ -98,5 +106,13 @@ public class CourseServlet extends HttpServlet {
         courseController.update(course);
 
         pw.println("<h1>Объект успешно обновлён</h1>");
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }
